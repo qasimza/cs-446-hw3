@@ -215,9 +215,9 @@ print(f"[OLS] Test MSE: {mse_ols:.4f} | RMSE ($): {rmse_ols:,.2f}")
 import numpy as np
 from sklearn.metrics import mean_squared_error
 
-#TODO b(i) Implement closed-form Ridge regression
+#b(i) Implement closed-form Ridge regression
 
-#TODO b(i)  Define I, XtX and Xty. Remember to set I[0, 0] to 0
+#b(i)  Define I, XtX and Xty. Remember to set I[0, 0] to 0
 
 def ridge_precompute(X_train_b, y_train):
     """
@@ -232,7 +232,7 @@ def ridge_precompute(X_train_b, y_train):
 
     return I, XtX, Xty
 
-#TODO b(i) Calculate w_ridge and y_pred_ridge
+# b(i) Calculate w_ridge and y_pred_ridge
 def ridge_solve_predict(XtX, Xty, I, best_lambda, X_test_b):
     """
     Solve ridge closed-form weights and return predictions.
@@ -303,7 +303,7 @@ def compute_gradient(X, y, w):
 
     return grad
 
-#TODO c(i) implement early stopping
+#c(i) implement early stopping
 # if ||w - w_prev||_inf < tol, break the loop
 def check_early_stop(w, w_prev, tol):
     """
@@ -383,7 +383,7 @@ print("\n[Top-10 |Lasso weights|]\n", top10)
 
 y_train_series = pd.Series(y_train)
 #TODO d(i) log transform the y_train_series. You can use np.log1p for this.
-y_train_log =
+y_train_log = np.log1p(y_train_series)
 
 skew_raw = float(y_train_series.skew())
 skew_log = float(y_train_log.skew())
