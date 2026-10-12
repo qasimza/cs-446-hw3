@@ -429,11 +429,11 @@ print("\n------------------------------------------------------")
 print("Part 4: Log-Transform + Duan's Smearing (Ridge & Lasso)")
 print("------------------------------------------------------")
 
-#TODO d(ii) log-transform y_train, y_val and y_test
+# d(ii) log-transform y_train, y_val and y_test
 # name the new variables y_train_log, y_val_log and y_test_log
-#y_train_log =
-#y_val_log   =
-#y_test_log  =
+y_train_log = np.log1p(y_train)
+y_val_log = np.log1p(y_val)
+y_test_log = np.log1p(y_test)
 
 # Precompute for log target (Xty depends on y)
 I, XtX, Xty_log = ridge_precompute(X_train_b, y_train_log)
