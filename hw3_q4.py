@@ -382,7 +382,7 @@ print("\n[Top-10 |Lasso weights|]\n", top10)
 # ------------------------------------------------------
 
 y_train_series = pd.Series(y_train)
-#TODO d(i) log transform the y_train_series. You can use np.log1p for this.
+# d(i) log transform the y_train_series. You can use np.log1p for this.
 y_train_log = np.log1p(y_train_series)
 
 skew_raw = float(y_train_series.skew())
@@ -399,7 +399,7 @@ if SHOW_PLOTS:
     plt.title(f"log1p(SalePrice) (train) — skew={skew_log:.2f}")
     plt.tight_layout(); plt.show()
 
-#TODO d(ii) calculate smear_ridge and y_pred_ridge_log_back
+#d(ii) calculate smear_ridge and y_pred_ridge_log_back
 # for smear_ridge you have to use np.exp on log residuals on train
 # for y_pred_ridge_log_back, you can use np.expm1 (https://numpy.org/doc/2.3/reference/generated/numpy.expm1.html)
 
@@ -417,6 +417,8 @@ def smear_back_transform(y_train_log, train_pred_log, X_test_b, w):
         smear : smearing correction factor
         y_pred_back : back-transformed predictions on test set
     """
+    smear = np.mean(np.exp(y_train_log - train_pred_log))
+    y_pred_back = np.expm1((X_test_b @ w) + np.log(smear))
 
     return smear, y_pred_back
 
