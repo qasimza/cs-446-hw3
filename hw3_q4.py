@@ -142,8 +142,7 @@ def zscore_transform(X, mean, std):
     Apply z-score normalization to X using given mean and std.
     Z-score is computed as: z = (x - mean) / std
     """
-
-    return Z
+    return (X - mean) / std
 
 
 # Train stats
