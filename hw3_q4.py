@@ -224,6 +224,11 @@ def ridge_precompute(X_train_b, y_train):
     Compute matrices for closed-form ridge regression.
     Returns: I, XtX, Xty
     """
+    n_features = X_train_b.shape[1]
+    I = np.eye(n_features)
+    I[0, 0] = 0
+    XtX = X_train_b.T @ X_train_b
+    Xty = X_train_b.T @ y_train
 
     return I, XtX, Xty
 
@@ -232,6 +237,8 @@ def ridge_solve_predict(XtX, Xty, I, best_lambda, X_test_b):
     """
     Solve ridge closed-form weights and return predictions.
     """
+    w_ridge = np.linalg.pinv(XtX + best_lambda * I) @ Xty
+    y_pred_ridge = X_test_b @ w_ridge
 
     return w_ridge, y_pred_ridge
 
