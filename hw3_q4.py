@@ -201,7 +201,9 @@ def ols_solve_predict(X_train_b, y_train, X_test_b):
         w_ols     : OLS weight vector
         y_pred    : Predictions on X_test_b
     """
-    #TODO a(iii) Implement OLS. You can use np.linalg.pinv for this
+    # w = X^+ y
+    w_ols = np.linalg.pinv(X_train_b) @ y_train
+    y_pred = X_test_b @ w_ols
 
     return w_ols, y_pred
 
