@@ -81,5 +81,12 @@ def svm_predictor(alpha, x_train, y_train, x_test,
     Return:
         A 1d tensor with shape (M,), the outputs of SVM on the test set.
     '''
-    # TODO
-    pass
+    num_train = x_train.shape[0]
+    num_test = x_test.shape[0]
+    kernel_matrix = torch.zeros(num_test, num_train, dtype=x_train.dtype)
+
+    for i in range(num_test):
+        for j in range(num_train):
+            kernel_matrix[i, j] = kernel(x_test[i], x_train[j])
+
+    return kernel_matrix @ (alpha * y_train)
