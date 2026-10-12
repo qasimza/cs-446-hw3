@@ -419,6 +419,9 @@ def smear_back_transform(y_train_log, train_pred_log, X_test_b, w):
     smear = np.mean(np.exp(y_train_log - train_pred_log))
     y_pred_back = np.expm1((X_test_b @ w) + np.log(smear))
 
+    smear = np.mean(np.exp(y_train_log - train_pred_log))
+    y_pred_back = np.expm1(X_test_b @ w) * smear
+    
     return smear, y_pred_back
 
 # ------------------------------------------------------
