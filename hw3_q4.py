@@ -293,11 +293,13 @@ L_data = lipschitz_constant_data(X_train_b)
 
 import numpy as np
 
-#TODO c(i) # set grad to the gradient of (1/n) * ||Xw - y||^2
+#c(i) # set grad to the gradient of (1/n) * ||Xw - y||^2
 def compute_gradient(X, y, w):
     """
     Compute the gradient of (1/n) * ||Xw - y||^2.
     """
+    n = X.shape[0]
+    grad = (2.0 / n) * (X.T @ (X @ w - y))
 
     return grad
 
@@ -308,8 +310,7 @@ def check_early_stop(w, w_prev, tol):
     Check if ||w - w_prev||_inf < tol.
     Returns True if early stopping should trigger.
     """
-
-    pass
+    return np.max(np.abs(w - w_prev)) < tol
 
 
 def ista_lasso(X, y, alpha, n_iterations, lambda_val, tol=1e-8):
