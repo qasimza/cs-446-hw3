@@ -100,18 +100,15 @@ def impute_data(X_train, X_val, X_test, features, strategy="median"):
     X_train, X_val, X_test = X_train.copy(), X_val.copy(), X_test.copy()
 
     if strategy == "median":
-        #TODO a(ii) calculate meadian
-        pass
+        train_stat = X_train[features].median()
     elif strategy == "mode":
-        #TODO a(ii) calculate mean
-        pass
+        train_stat = X_train[features].mode().iloc[0]
     else:
         raise ValueError("strategy must be 'median' or 'mode'")
 
-    #TODO a(ii) use fillna
-    #X_train.loc[:, features] =
-    #X_val.loc[:,   features] =
-    #X_test.loc[:,  features] =
+    X_train.loc[:, features] = X_train.loc[:, features].fillna(train_stat)
+    X_val.loc[:, features] = X_val.loc[:, features].fillna(train_stat)
+    X_test.loc[:, features] = X_test.loc[:, features].fillna(train_stat)
 
     return X_train, X_val, X_test
 
