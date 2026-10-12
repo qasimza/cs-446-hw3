@@ -60,6 +60,15 @@ def split_data(X, y, train_size=0.7, val_size=0.15, test_size=0.15, random_state
     assert abs(train_size + val_size + test_size - 1.0) < 1e-8, \
         "train_size + val_size + test_size must sum to 1."
 
+    X_train, X_test_and_val, y_train, y_test_and_val = train_test_split(
+        X, y, test_size=(val_size + test_size), random_state=random_state
+    )
+    X_val, X_test, y_val, y_test = train_test_split(
+        X_test_and_val, y_test_and_val,
+        test_size=(test_size / (val_size + test_size)),
+        random_state=random_state,
+    )
+
     # Return copies to avoid SettingWithCopy issues
     return (X_train.copy(), X_val.copy(), X_test.copy(),
             y_train.copy(), y_val.copy(), y_test.copy())
