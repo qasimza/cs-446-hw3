@@ -136,7 +136,7 @@ else:
 
 print(f"[One-Hot] Train categorical columns: {X_train_cat.shape[1]}")
 
-# TODO a(ii) calculate z-score numerics
+# a(ii) calculate z-score numerics
 def zscore_transform(X, mean, std):
     """
     Apply z-score normalization to X using given mean and std.

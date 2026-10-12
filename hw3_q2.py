@@ -83,10 +83,39 @@ def svm_predictor(alpha, x_train, y_train, x_test,
     '''
     num_train = x_train.shape[0]
     num_test = x_test.shape[0]
-    kernel_matrix = torch.zeros(num_test, num_train, dtype=x_train.dtype)
+
+    kernel_matrix = torch.zeros(
+        num_test, num_train,
+        dtype=x_train.dtype,
+        device=x_train.device
+    )
 
     for i in range(num_test):
         for j in range(num_train):
             kernel_matrix[i, j] = kernel(x_test[i], x_train[j])
 
-    return kernel_matrix @ (alpha * y_train)
+    train_kernel_matrix = torch.zeros(
+        num_train, num_train,
+        dtype=x_train.dtype,
+        device=x_train.device
+    )
+
+    for i in range(num_train):
+        for j in range(num_train):
+            train_kernel_matrix[i, j] = kernel(
+                x_train[i], x_train[j]
+            )
+
+    scores_train = train_kernel_matrix @ (alpha * y_train)
+
+    support_indices = torch.where(alpha > 0)[0]
+
+    min_idx = support_indices[
+        torch.argmin(alpha[support_indices])
+    ]
+
+    b = y_train[min_idx] - scores_train[min_idx]
+
+    predictions = kernel_matrix @ (alpha * y_train) + b
+
+    return predictions
